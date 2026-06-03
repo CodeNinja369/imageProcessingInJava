@@ -3,10 +3,16 @@ class pixel{
     int pixelC;
     int[] pixelA;
     double pixelB;
+    int red;
+    int green;
+    int blue;
     public pixel(int pixelC){
         this.pixelC = pixelC;
         this.pixelA = getRGBArray();
         this.pixelB = getBrightness();
+        this.red = pixelA[0];
+        this.green = pixelA[1];
+        this.blue = pixelA[2];
     }
     private int[] getRGBArray(){
         Color clr = new Color(this.pixelC);

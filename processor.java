@@ -38,6 +38,7 @@ public class processor {
             System.err.print(e);
         }
     }
+    //sorting by rgb base 255 value
     public void sort1(){
         int e = 0;
         Arrays.sort(this.fArray);
@@ -49,6 +50,7 @@ public class processor {
             }
         }
     }
+    //sorting by brightness calculated for differences in human vision
     public void sort2(){
         int n = this.pArray.length;
         for (int i = 1; i < n; ++i) {
@@ -68,9 +70,73 @@ public class processor {
                 e++;
             }
         }
-        
-
     }
+
+
+//sorted by red value
+    public void sort2_2(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].red > key.red) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        for(int x =0; x<this.xSize; x++){
+            
+            for(int y = 0; y<this.ySize; y++){
+                this.image.setRGB(x, y, this.pArray[e].pixelC);
+                e++;
+            }
+        }
+    }
+    //sorted by green
+    public void sort2_3(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].green > key.blue) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        for(int x =0; x<this.xSize; x++){
+            
+            for(int y = 0; y<this.ySize; y++){
+                this.image.setRGB(x, y, this.pArray[e].pixelC);
+                e++;
+            }
+        }
+    }
+    //sorted by blue
+    public void sort2_4(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].blue > key.blue) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        for(int x =0; x<this.xSize; x++){
+            
+            for(int y = 0; y<this.ySize; y++){
+                this.image.setRGB(x, y, this.pArray[e].pixelC);
+                e++;
+            }
+        }
+    }
+//create array of pixel objects in an image
     private pixel[] getPArray(){
         int d = 0;
         pixel[] out = new pixel[this.xSize*this.ySize];
@@ -80,6 +146,7 @@ public class processor {
         
         return out;
     }
+    //created flattened array
     private int[] getFarray(){
         int d = 0;
         int[] out = new int[this.xSize*this.ySize];
