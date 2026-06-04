@@ -1,13 +1,17 @@
 import java.awt.image.BufferedImage;
 public class m{
     public static void main(String[]args){
-        int w = 643;
-        int h = 360;
-        BufferedImage demo1Im = null;
-        processor demo1 = new processor("demo2.jpg", "demo2Out2.4.jpg", w, h, demo1Im);
-        demo1.read();
-        demo1.sort2_4();
-        demo1.write();
+        int w = 205;
+        int h = 246;
+        BufferedImage demoIm = null;
+        BufferedImage mapIm = null;
+        processor demo = new processor("demo3.jpg", "demo1Out4.jpg", w, h, demoIm);
+        processor mappa = new processor("demo1.jpg", "demo1Out4.jpg", w, h, mapIm);
+        demo.read();
+        mappa.read();
+        demo.sort2();
+        mappa.obamaAlg(demo);
+        mappa.write();
         
     }
     

@@ -158,5 +158,71 @@ public class processor {
         }
         return out;
     }
+    //sorts into checkerboard-like pattern of alternating pixels with maximised contrast
+    public void sort3(){
+        for(int index = 0; index < pArray.length - 1; index++){
+            pixel c1 = pArray[index];
+            pixel pstore = c1;
+            int ppos = 0; 
+            double contstore = 0;
+            for(int i = index+1; i < pArray.length; i++){
+                double contrast = 0;
+                if(c1.pixelB > pArray[i].pixelB){
+                    contrast = (c1.pixelB + 0.05) / (pArray[i].pixelB + 0.05);
+                }
+                if(pArray[i].pixelB > c1.pixelB){
+                    contrast = (pArray[i].pixelB + 0.05) / (c1.pixelB + 0.05);
+                }
+                if(contstore < contrast){
+                    contstore = contrast;
+                    pstore = pArray[i];
+                    ppos = i;
+                }
+            }
+            pixel np = pArray[index+1];
+            pArray[index+1] = pstore;
+            pArray[ppos] = np;
+        }
+        int e = 0;
+        for(int x =0; x<this.xSize; x++){
+                
+            for(int y = 0; y<this.ySize; y++){
+               this.image.setRGB(x, y, this.pArray[e].pixelC);
+                    e++;
+            }
+        }
+    }
+    //creates brightness map of image
+    public int[] createMap() {
+        int[] map = new int[pArray.length];
+    
+        for (int i = 0; i < pArray.length; i++) {
+            int rank = 0;
+            for (int j = 0; j < pArray.length-1; j++) {
+                if (pArray[j].pixelB <= pArray[i].pixelB) {
+                    rank++;
+                }
+            }
+            map[i] = rank;
+        }
+    
+        return map;
+    }
+    //recolours image using brightness map, and image of equal size sorted by brightness
+    public void obamaAlg(processor pp){
+        int[] m = createMap();
+        for(int i =0; i<pArray.length-1; i++){
+            this.pArray[i] = pp.pArray[m[i]];
+        }
+        int e = 0;
+        for(int x =0; x<this.xSize; x++){
+            
+            for(int y = 0; y<this.ySize; y++){
+                this.image.setRGB(x, y, this.pArray[e].pixelC);
+                e++;
+            }
+        }
+    }
+
     
 }
