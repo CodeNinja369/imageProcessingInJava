@@ -5,13 +5,12 @@ public class m{
         int h = 246;
         BufferedImage demoIm = null;
         BufferedImage mapIm = null;
-        processor demo = new processor("demo3.jpg", "demo1Out4.jpg", w, h, demoIm);
-        processor mappa = new processor("demo1.jpg", "demo1Out4.jpg", w, h, mapIm);
+        processor demo = new processor("demo1.jpg", "demo1Out3.jpg", w, h, demoIm);
+
         demo.read();
-        mappa.read();
-        demo.sort2();
-        mappa.obamaAlg(demo);
-        mappa.write();
+
+        demo.sort3();
+        demo.write();
         
     }
     
