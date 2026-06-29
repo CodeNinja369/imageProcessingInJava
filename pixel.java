@@ -1,11 +1,11 @@
 import java.awt.Color;
 class pixel{
-    int pixelC;
-    int[] pixelA;
-    double pixelB;
-    int red;
-    int green;
-    int blue;
+    public int pixelC;
+    public int[] pixelA;
+    public double pixelB;
+    public int red;
+    public int green;
+    public int blue;
     public pixel(int pixelC){
         this.pixelC = pixelC;
         this.pixelA = getRGBArray();
