@@ -1,7 +1,8 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
+import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
+
 public class processor {
     private String fileName;
     private String fileOutName;
@@ -20,123 +21,24 @@ public class processor {
         this.fArray = getFarray();
         this.pArray = getPArray();
     }
-    public void read(){
+    //read and write to image files
+    public void read() {
         try {
-            File demo = new File(this.fileName);
-            this.image = new BufferedImage(this.xSize, this.ySize, BufferedImage.TYPE_INT_RGB);
-            this.image = ImageIO.read(demo);
-
+            image = ImageIO.read(new File(this.fileName));
         } catch (Exception e) {
-            System.err.print(e);
+            System.err.println("read: " + e.getMessage());
         }
     }
-    public void write(){
+
+    public void write() {
         try {
             File output = new File(this.fileOutName);
             ImageIO.write(this.image, "jpg", output);
         } catch (Exception e) {
-            System.err.print(e);
+            System.err.println("write: " + e.getMessage());
         }
     }
-    //sorting by rgb base 255 value
-    public void sort1(){
-        int e = 0;
-        Arrays.sort(this.fArray);
-        
-        for(int x =0; x<this.xSize; x++){
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.fArray[e]);
-                e++;
-            }
-        }
-    }
-    //sorting by brightness calculated for differences in human vision
-    public void sort2(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].pixelB > key.pixelB) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
-        for(int x =0; x<this.xSize; x++){
-            
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.pArray[e].pixelC);
-                e++;
-            }
-        }
-    }
-
-
-//sorted by red value
-    public void sort2_2(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].red > key.red) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
-        for(int x =0; x<this.xSize; x++){
-            
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.pArray[e].pixelC);
-                e++;
-            }
-        }
-    }
-    //sorted by green
-    public void sort2_3(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].green > key.blue) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
-        for(int x =0; x<this.xSize; x++){
-            
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.pArray[e].pixelC);
-                e++;
-            }
-        }
-    }
-    //sorted by blue
-    public void sort2_4(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].blue > key.blue) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
-        for(int x =0; x<this.xSize; x++){
-            
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.pArray[e].pixelC);
-                e++;
-            }
-        }
-    }
-//create array of pixel objects in an image
+    //create array of pixel objects in an image
     private pixel[] getPArray(){
         int d = 0;
         pixel[] out = new pixel[this.xSize*this.ySize];
@@ -158,6 +60,116 @@ public class processor {
         }
         return out;
     }
+    //quicksort
+    private int partition(Field f, int low, int high) {
+        int i = low - 1;
+        try {
+            double pivot = (double) f.get(pArray[high]);
+
+            for (int j = low; j <= high - 1; j++) {
+                if ((double) f.get(pArray[j]) < pivot) {
+                    i++;
+                    swap(i, j);
+                }
+            }
+            swap(i + 1, high);
+
+        } catch (IllegalAccessException e) {
+            System.err.println("partition: cannot access field — " + e.getMessage());
+        }
+        return i + 1;
+    }
+
+    private void swap(int i, int j) {
+        pixel temp = this.pArray[i];
+        pArray[i] = pArray[j];
+        pArray[j] = temp;
+    }
+
+    public void quickSort(String att, int low, int high) {
+        try {
+            Field field = pixel.class.getField(att);
+            quickSortInternal(field, low, high);
+        } catch (NoSuchFieldException e) {
+            System.err.println("quickSort: no field named '" + att + "' on pixel");
+        }
+    }
+
+    private void quickSortInternal(Field field, int low, int high) {
+        if (low < high) {
+            int pi = partition(field, low, high);
+            quickSortInternal(field, low, pi - 1);
+            quickSortInternal(field, pi + 1, high);
+        }
+    }
+    //update image file
+    private void update(){
+        int e = 0;
+        for (int x = 0; x < this.xSize; x++) {
+            for (int y = 0; y < this.ySize; y++) {
+                this.image.setRGB(x, y, this.pArray[e].pixelC);
+                e++;
+            }
+        }
+    }
+    //sorts base 255 colour values using quicksort
+    public void sort1() {
+        quickSort("pixelC", 0, pArray.length - 1);
+        update();
+    }
+    //sorting by brightness calculated for differences in human vision
+    public void sort2(){
+        quickSort("pixelB", 0, this.pArray.length-1);
+        update();
+    }
+
+
+//sorted by red value
+    public void sort2_2(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].red > key.red) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        update();
+    }
+    //sorted by green
+    public void sort2_3(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].green > key.blue) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        update();
+    }
+    //sorted by blue
+    public void sort2_4(){
+        int n = this.pArray.length;
+        for (int i = 1; i < n; ++i) {
+            pixel key = this.pArray[i];
+            int j = i - 1;
+            while (j >= 0 && this.pArray[j].blue > key.blue) {
+                this.pArray[j + 1] = this.pArray[j];
+                j = j - 1;
+            }
+            this.pArray[j + 1] = key;
+        }
+        int e = 0;
+        update();
+    }
+
     //sorts into checkerboard-like pattern of alternating pixels with maximised contrast
     public void sort3(){
         for(int index = 0; index < pArray.length - 1; index++){
@@ -184,13 +196,7 @@ public class processor {
             pArray[ppos] = np;
         }
         int e = 0;
-        for(int x =0; x<this.xSize; x++){
-                
-            for(int y = 0; y<this.ySize; y++){
-               this.image.setRGB(x, y, this.pArray[e].pixelC);
-                    e++;
-            }
-        }
+        update();
     }
     //creates brightness map of image
     public int[] createMap() {
@@ -214,14 +220,7 @@ public class processor {
         for(int i =0; i<pArray.length-1; i++){
             this.pArray[i] = pp.pArray[m[i]];
         }
-        int e = 0;
-        for(int x =0; x<this.xSize; x++){
-            
-            for(int y = 0; y<this.ySize; y++){
-                this.image.setRGB(x, y, this.pArray[e].pixelC);
-                e++;
-            }
-        }
+        update();
     }
 
     
