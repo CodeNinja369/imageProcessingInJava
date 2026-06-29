@@ -126,47 +126,17 @@ public class processor {
 
 //sorted by red value
     public void sort2_2(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].red > key.red) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
+        quickSort("red", 0, this.pArray.length-1);
         update();
     }
     //sorted by green
     public void sort2_3(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].green > key.blue) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
+        quickSort("green", 0, this.pArray.length-1);
         update();
     }
     //sorted by blue
     public void sort2_4(){
-        int n = this.pArray.length;
-        for (int i = 1; i < n; ++i) {
-            pixel key = this.pArray[i];
-            int j = i - 1;
-            while (j >= 0 && this.pArray[j].blue > key.blue) {
-                this.pArray[j + 1] = this.pArray[j];
-                j = j - 1;
-            }
-            this.pArray[j + 1] = key;
-        }
-        int e = 0;
+        quickSort("blue", 0, this.pArray.length-1);
         update();
     }
 
