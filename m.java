@@ -41,12 +41,19 @@ public class m{
                 if(inp.equals("-rg")){
                     demo.onlyBlue();
                 }
+                if(inp.equals("w")){
+                    demo.white();
+                }
                 if(inp.equals("-w")){
                     demo.noWhite();
+                }
+                if(inp.equals("b")){
+                    demo.black();;
                 }
                 if(inp.equals("a1")){
                     demo.average1();
                 }
+
                 /*if(inp.equals("a2")){
                     demo.average2();
                 }*/

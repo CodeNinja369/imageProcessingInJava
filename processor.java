@@ -253,6 +253,28 @@ public class processor {
         }
         update();
     }
+    public void white(){
+        for(int i = 0; i < pArray.length; i++){
+            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
+            pArray[i].red   = max;
+            pArray[i].green = max;
+            pArray[i].blue  = max;
+            pArray[i].updateC();
+            
+        }
+        update();
+    }
+    public void black(){
+        for(int i = 0; i < pArray.length; i++){
+            int max = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
+            pArray[i].red   = max;
+            pArray[i].green = max;
+            pArray[i].blue  = max;
+            pArray[i].updateC();
+            
+        }
+        update();
+    }
 
     //changes a pixel's colour value to an average value based on position
     public void average1(){
