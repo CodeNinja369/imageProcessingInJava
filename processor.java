@@ -193,6 +193,7 @@ public class processor {
         }
         update();
     }
+    //remove Red, Green or Blue, or any combination of two
     public void onlyRed(){
         for(int i =0; i<pArray.length; i++){
             pArray[i].green=0;
@@ -231,12 +232,32 @@ public class processor {
         }
         update();
     }
-    public void noBlue(){for(int i =0; i<pArray.length; i++){
+    public void noBlue(){
+        for(int i =0; i<pArray.length; i++){
             pArray[i].blue=0;
             pArray[i].updateC();
         }
         update();
     }
+    public void noWhite(){
+        if(pArray[0].red<=pArray[0].green &&pArray[0].red<=pArray[0].blue){
+            pArray[0].green -=pArray[0].red*(pArray[0].green/pArray[0].red);
+            pArray[0].blue -=pArray[0].red*(pArray[0].blue/pArray[0].red);
+            pArray[0].red = 0;
+        }
+        else if(pArray[0].blue<=pArray[0].green &&pArray[0].blue<=pArray[0].red){
+            pArray[0].green -=pArray[0].blue*(pArray[0].green/pArray[0].blue);
+            pArray[0].red -=pArray[0].blue*(pArray[0].red/pArray[0].blue);
+            pArray[0].blue=0;
+        }
+        else if(pArray[0].green<=pArray[0].blue &&pArray[0].green<=pArray[0].red){
+            pArray[0].blue -=pArray[0].green*(pArray[0].green/pArray[0].blue);
+            pArray[0].red -=pArray[0].green*(pArray[0].red/pArray[0].blue);
+            pArray[0].blue=0;
+        }
+
+    }
+    //changes a pixel's colour value to an average value based on position
     public void average1(){
         int[] rowAv = new int[3];
         int[][] rAvs = new int[this.ySize][3];
@@ -264,6 +285,5 @@ public class processor {
             }
         }
         update();
-
     }
 }

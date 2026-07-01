@@ -41,6 +41,9 @@ public class m{
                 if(inp.equals("-rg")){
                     demo.onlyBlue();
                 }
+                if(inp.equals("-w")){
+                    demo.noWhite();
+                }
                 if(inp.equals("a1")){
                     demo.average1();
                 }
