@@ -19,6 +19,10 @@ class pixel{
         int[] val = {clr.getRed(), clr.getGreen(), clr.getBlue()};
         return val;
     }
+    public void updateC(){
+        Color clr = new Color(this.red, this.green, this.blue);
+        this.pixelC = clr.getRGB();
+    }
     private double getBrightness(){
         int[] rgb = this.pixelA;
         return (0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2]);
