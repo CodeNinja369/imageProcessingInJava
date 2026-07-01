@@ -239,12 +239,26 @@ public class processor {
     }
     public void average1(){
         int[] rowAv = new int[3];
-        int[] rAvs = new int[this.ySize];
-        for(int i = 0; i<this.xSize; i++){
-            rowAv[0]+=pArray[i].red;
-            rowAv[1]+=pArray[i].green;
-            rowAv[2]+=pArray[i].blue;
+        int[][] rAvs = new int[this.ySize][3];
+        for(int i =0; i<this.ySize; i++){
+            for(int j = 0; j<this.xSize; j++){
+                rowAv[0]+=pArray[j+i].red;
+                rowAv[1]+=pArray[j+i].green;
+                rowAv[2]+=pArray[j+i].blue;
+            }
+            rAvs[i][0] = rowAv[0]/this.xSize;
+            rAvs[i][1] = rowAv[1]/this.xSize;
+            rAvs[i][2] = rowAv[2]/this.xSize;
         }
+        for(int i =0; i<this.ySize; i++){
+            for(int j = 0; j<this.xSize; j++){
+                pArray[j+i].red = rAvs[i][0];
+                pArray[j+i].green = rAvs[i][1];
+                pArray[j+i].blue = rAvs[i][2];
+            }
+        }
+        
+
     }
 
     
