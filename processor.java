@@ -240,23 +240,20 @@ public class processor {
         update();
     }
     public void noWhite(){
-        if(pArray[0].red<=pArray[0].green &&pArray[0].red<=pArray[0].blue){
-            pArray[0].green -=pArray[0].red*(pArray[0].green/pArray[0].red);
-            pArray[0].blue -=pArray[0].red*(pArray[0].blue/pArray[0].red);
-            pArray[0].red = 0;
+        for(int i = 0; i < pArray.length; i++){
+            int min = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
+            if(min>0){
+                pArray[i].red   = pArray[i].red%min;
+                pArray[i].green = pArray[i].green%min;
+                pArray[i].blue  = pArray[i].blue%min;
+                
+            }
+            pArray[i].updateC();
+            
         }
-        else if(pArray[0].blue<=pArray[0].green &&pArray[0].blue<=pArray[0].red){
-            pArray[0].green -=pArray[0].blue*(pArray[0].green/pArray[0].blue);
-            pArray[0].red -=pArray[0].blue*(pArray[0].red/pArray[0].blue);
-            pArray[0].blue=0;
-        }
-        else if(pArray[0].green<=pArray[0].blue &&pArray[0].green<=pArray[0].red){
-            pArray[0].blue -=pArray[0].green*(pArray[0].green/pArray[0].blue);
-            pArray[0].red -=pArray[0].green*(pArray[0].red/pArray[0].blue);
-            pArray[0].blue=0;
-        }
-
+        update();
     }
+
     //changes a pixel's colour value to an average value based on position
     public void average1(){
         int[] rowAv = new int[3];
