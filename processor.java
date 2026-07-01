@@ -65,10 +65,10 @@ public class processor {
     private int partition(Field f, int low, int high) {
         int i = low - 1;
         try {
-            double pivot = (double) f.get(pArray[high]);
+            double pivot = Double.parseDouble(f.get(pArray[high]).toString());
 
             for (int j = low; j <= high - 1; j++) {
-                if ((double) f.get(pArray[j]) < pivot) {
+                if (Double.parseDouble(f.get(pArray[j]).toString()) < pivot) {
                     i++;
                     swap(i, j);
                 }
@@ -240,26 +240,30 @@ public class processor {
     public void average1(){
         int[] rowAv = new int[3];
         int[][] rAvs = new int[this.ySize][3];
+        int e =0;
         for(int i =0; i<this.ySize; i++){
             for(int j = 0; j<this.xSize; j++){
-                rowAv[0]+=pArray[j+i].red;
-                rowAv[1]+=pArray[j+i].green;
-                rowAv[2]+=pArray[j+i].blue;
+                rowAv[0]+=pArray[e].red;
+                rowAv[1]+=pArray[e].green;
+                rowAv[2]+=pArray[e].blue;
+                e++;
             }
             rAvs[i][0] = rowAv[0]/this.xSize;
             rAvs[i][1] = rowAv[1]/this.xSize;
             rAvs[i][2] = rowAv[2]/this.xSize;
+            rowAv = new int[3];
         }
+        e=0;
         for(int i =0; i<this.ySize; i++){
             for(int j = 0; j<this.xSize; j++){
-                pArray[j+i].red = rAvs[i][0];
-                pArray[j+i].green = rAvs[i][1];
-                pArray[j+i].blue = rAvs[i][2];
+                pArray[e].red = rAvs[i][0];
+                pArray[e].green = rAvs[i][1];
+                pArray[e].blue = rAvs[i][2];
+                pArray[e].updateC();
+                e++;
             }
         }
-        
+        update();
 
     }
-
-    
 }
