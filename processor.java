@@ -3,6 +3,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
 
+
 public class processor {
     private String fileName;
     private String fileOutName;
@@ -49,7 +50,7 @@ public class processor {
         return out;
     }
     //created flattened array
-    private int[] getFarray(){
+    private int [] getFarray(){
         int d = 0;
         int[] out = new int[this.xSize*this.ySize];
         for(int x =0; x<this.xSize; x++){
@@ -191,6 +192,59 @@ public class processor {
             this.pArray[i] = pp.pArray[m[i]];
         }
         update();
+    }
+    public void onlyRed(){
+        for(int i =0; i<pArray.length; i++){
+            pArray[i].green=0;
+            pArray[i].blue=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void onlyBlue(){
+        for(int i =0; i<pArray.length; i++){
+            pArray[i].red=0;
+            pArray[i].blue=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void onlyGreen(){
+        for(int i =0; i<pArray.length; i++){
+            pArray[i].red=0;
+            pArray[i].blue=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void noRed(){
+        for(int i =0; i<pArray.length; i++){
+            pArray[i].red=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void noGreen(){
+        for(int i =0; i<pArray.length; i++){
+            pArray[i].green=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void noBlue(){for(int i =0; i<pArray.length; i++){
+            pArray[i].blue=0;
+            pArray[i].updateC();
+        }
+        update();
+    }
+    public void average1(){
+        int[] rowAv = new int[3];
+        int[] rAvs = new int[this.ySize];
+        for(int i = 0; i<this.xSize; i++){
+            rowAv[0]+=pArray[i].red;
+            rowAv[1]+=pArray[i].green;
+            rowAv[2]+=pArray[i].blue;
+        }
     }
 
     
