@@ -42,8 +42,11 @@ public class m{
                     demo.onlyBlue();
                 }
                 if(inp.equals("a1")){
-                    
+                    demo.average1();
                 }
+                /*if(inp.equals("a2")){
+                    demo.average2();
+                }*/
 
                 demo.write();
             }
