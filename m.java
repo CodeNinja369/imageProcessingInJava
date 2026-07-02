@@ -29,9 +29,12 @@ public class m{
         processor mappa2 = new processor("demo4.jpg", "io.jpg", w, h, mapIm);
         int count = 0;
         while(!inp.equals("e")){
+            
             System.out.print("input number:");
             inp = scnr.nextLine();
-            
+            if(!inp.equals("e")){
+                title+=", ";
+            }
             if(!(inp.equals(""))){
                 demo.read();
                 if(inp.equals("s1")){
@@ -105,7 +108,7 @@ public class m{
                     title+="O2";
                 }
                 demo.write();
-                title+=", ";
+                
             }
             
         }
