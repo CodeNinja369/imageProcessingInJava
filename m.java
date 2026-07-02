@@ -74,9 +74,13 @@ public class m{
                     demo.white();
                     title+="w";
                 }
-                if(inp.equals("-w")){
-                    demo.noWhite();
-                    title+="-w";
+                if(inp.equals("-w1")){
+                    demo.noWhite1();
+                    title+="-w1";
+                }
+                if(inp.equals("-w2")){
+                    demo.noWhite2();
+                    title+="-w2";
                 }
                 if(inp.equals("b")){
                     demo.black();

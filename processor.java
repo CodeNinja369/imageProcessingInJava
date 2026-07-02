@@ -240,13 +240,27 @@ public class processor {
         }
         update();
     }
-    public void noWhite(){
+    public void noWhite1(){
         for(int i = 0; i < pArray.length; i++){
             int min = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
             if(min>0){
                 pArray[i].red   = pArray[i].red%min;
                 pArray[i].green = pArray[i].green%min;
                 pArray[i].blue  = pArray[i].blue%min;
+                
+            }
+            pArray[i].updateC();
+            
+        }
+        update();
+    }
+    public void noWhite2(){
+        for(int i = 0; i < pArray.length; i++){
+            int min = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
+            if(min>0){
+                pArray[i].red   = pArray[i].red-min;
+                pArray[i].green = pArray[i].green-min;
+                pArray[i].blue  = pArray[i].blue-min;
                 
             }
             pArray[i].updateC();
