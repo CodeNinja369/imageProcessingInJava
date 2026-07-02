@@ -31,6 +31,7 @@ public class processor {
         }
     }
 
+    
     public void write() {
         try {
             File output = new File(this.fileOutName);
