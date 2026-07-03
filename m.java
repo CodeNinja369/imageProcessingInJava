@@ -32,9 +32,7 @@ public class m{
             
             System.out.print("input number:");
             inp = scnr.nextLine();
-            if(!inp.equals("e")){
-                title+=", ";
-            }
+            
             if(!(inp.equals(""))){
                 demo.read();
                 if(inp.equals("s1")){
@@ -108,7 +106,9 @@ public class m{
                     title+="O2";
                 }
                 demo.write();
-                
+               if(!inp.equals("e")){
+                title+=", ";
+            } 
             }
             
         }

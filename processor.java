@@ -186,22 +186,20 @@ public class processor {
         update();
     }
     //creates brightness map of image
-    public int[] createMap() {
-        int rows = pArray.length;
-        int cols = pArray[0].length;
-        int total = rows * cols;
-        int[] map = new int[total];
+    public int[][] createMap() {
+        
+        int[][] map = new int[this.xSize][this.ySize];
 
-        for (int i = 0; i < total; i++) {
-            int ri = i / cols, ci = i % cols;
+        for (int i = 0; i < xSize; i++) {
             int rank = 0;
-            for (int j = 0; j < total - 1; j++) {
-                int rj = j / cols, cj = j % cols;
-                if (pArray[rj][cj].pixelB <= pArray[ri][ci].pixelB) {
+            for (int j = 0; j < ySize - 1; j++) {
+
+                if (pArray[i][j].pixelB <= pArray[i][j].pixelB) {
                     rank++;
+                    map[i][j] = rank;
                 }
             }
-            map[i] = rank;
+            
         }
 
         return map;
@@ -209,16 +207,12 @@ public class processor {
 
     //recolours image using brightness map, and image of equal size sorted by brightness
     public void obamaAlg(processor pp) {
-        int[] m = createMap();
-        int rows = pArray.length;
-        int cols = pArray[0].length;
-        int total = rows * cols;
+        int[][] m = createMap();
+        
 
-        for (int i = 0; i < total - 1; i++) {
-            int ri = i / cols, ci = i % cols;
-            int rank = m[i];
-            int rr = rank / cols, rc = rank % cols;
-            this.pArray[ri][ci] = pp.pArray[rr][rc];
+        for (int i = 0; i < xSize-1 ; i++) {
+            for(int j = 0; i<ySize-1; j++)
+                this.pArray[i][j] = pp.pArray[i][j];
         }
         update();
     }
