@@ -2,8 +2,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
-
-
+ 
+ 
 public class processor {
     private String fileName;
     private String fileOutName;
@@ -30,7 +30,7 @@ public class processor {
             System.err.println("read: " + e.getMessage());
         }
     }
-
+ 
     
     public void write() {
         try {
@@ -67,7 +67,7 @@ public class processor {
         int i = low - 1;
         try {
             double pivot = Double.parseDouble(f.get(pArray[high]).toString());
-
+ 
             for (int j = low; j <= high - 1; j++) {
                 if (Double.parseDouble(f.get(pArray[j]).toString()) < pivot) {
                     i++;
@@ -75,19 +75,19 @@ public class processor {
                 }
             }
             swap(i + 1, high);
-
+ 
         } catch (IllegalAccessException e) {
             System.err.println("partition: cannot access field — " + e.getMessage());
         }
         return i + 1;
     }
-
+ 
     private void swap(int i, int j) {
         pixel temp = this.pArray[i];
         pArray[i] = pArray[j];
         pArray[j] = temp;
     }
-
+ 
     public void quickSort(String att, int low, int high) {
         try {
             Field field = pixel.class.getField(att);
@@ -96,7 +96,7 @@ public class processor {
             System.err.println("quickSort: no field named '" + att + "' on pixel");
         }
     }
-
+ 
     private void quickSortInternal(Field field, int low, int high) {
         if (low < high) {
             int pi = partition(field, low, high);
@@ -124,8 +124,8 @@ public class processor {
         quickSort("pixelB", 0, this.pArray.length-1);
         update();
     }
-
-
+ 
+ 
 //sorted by red value
     public void sort2_2(){
         quickSort("red", 0, this.pArray.length-1);
@@ -141,7 +141,7 @@ public class processor {
         quickSort("blue", 0, this.pArray.length-1);
         update();
     }
-
+ 
     //sorts into checkerboard-like pattern of alternating pixels with maximised contrast
     public void sort3(){
         for(int index = 0; index < pArray.length - 1; index++){
@@ -174,12 +174,12 @@ public class processor {
     public int[][] createMap() {
         
         int[][] map = new int[this.xSize][this.ySize];
-
+ 
         for (int i = 0; i < xSize; i++) {
             int rank = 0;
             for (int j = 0; j < ySize - 1; j++) {
-
-                if (pArray[i][j].pixelB <= pArray[i][j].pixelB) {
+                int idx = i * ySize + j;
+                if (pArray[idx].pixelB <= pArray[idx + 1].pixelB) {
                     rank++;
                     map[i][j] = rank;
                 }
@@ -193,10 +193,12 @@ public class processor {
     public void obamaAlg(processor pp) {
         int[][] m = createMap();
         
-
+ 
         for (int i = 0; i < xSize-1 ; i++) {
-            for(int j = 0; i<ySize-1; j++)
-                this.pArray[i][j] = pp.pArray[i][j];
+            for(int j = 0; j<ySize-1; j++){
+                int idx = i * ySize + j;
+                this.pArray[idx] = pp.pArray[idx];
+            }
         }
         update();
     }
@@ -212,7 +214,7 @@ public class processor {
     public void onlyBlue(){
         for(int i =0; i<pArray.length; i++){
             pArray[i].red=0;
-            pArray[i].blue=0;
+            pArray[i].green=0;
             pArray[i].updateC();
         }
         update();
@@ -296,7 +298,7 @@ public class processor {
         }
         update();
     }
-
+ 
     //changes a pixel's colour value to an average value based on position
     public void average1(){
         int[] rowAv = new int[3];
