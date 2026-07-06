@@ -6,13 +6,18 @@ class pixel{
     public int red;
     public int green;
     public int blue;
-    public pixel(int pixelC){
+    public int px;
+    public int py;
+    public pixel(int pixelC, int x, int y){
         this.pixelC = pixelC;
         this.pixelA = getRGBArray();
         this.pixelB = getBrightness();
         this.red = pixelA[0];
         this.green = pixelA[1];
         this.blue = pixelA[2];
+        this.px = x;
+        this.py = y;
+        
     }
     private int[] getRGBArray(){
         Color clr = new Color(this.pixelC);

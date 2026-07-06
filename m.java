@@ -105,6 +105,10 @@ public class m{
                     demo.obamaAlg(mappa2);
                     title+="O2";
                 }
+                if(inp.equals("l")){
+                    demo.left();
+                    title+="l";
+                }
                 demo.write();
                if(!inp.equals("e")){
                 title+=", ";

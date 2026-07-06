@@ -45,10 +45,16 @@ public class processor {
         int d = 0;
         pixel[] out = new pixel[this.xSize*this.ySize];
         for(int i = 0; i<this.fArray.length; i++){
-            out[i] = new pixel(this.fArray[i]);
+            out[i] = new pixel(this.fArray[i], i%this.xSize, i/this.xSize);
         }
         
         return out;
+    }
+    public void updatePP(){
+        for(int i = 0; i<xSize*ySize; i++){
+            this.pArray[this.pArray[i].py*(xSize-1)+this.pArray[i].py] = this.pArray[i];
+        }
+        update();
     }
     //created flattened array
     private int [] getFarray(){
@@ -326,6 +332,18 @@ public class processor {
                 e++;
             }
         }
+        update();
+    }
+    public void left(){
+        for(int i = 0; i<xSize*ySize; i++){
+            if(pArray[i].py+10<=xSize){
+                pArray[i].py+=10;
+            }
+            else{
+                pArray[i].py=pArray[i].py%xSize+10;
+            }
+        }
+        updatePP();
         update();
     }
 }
