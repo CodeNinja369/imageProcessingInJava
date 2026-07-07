@@ -55,7 +55,14 @@ public class processor {
         pixel[] newArr = new pixel[xSize*ySize];
         for(int i = 0; i<xSize*ySize; i++){
             int idx = this.pArray[i].px * ySize + this.pArray[i].py;
-            newArr[idx] = this.pArray[i];
+            if(newArr[idx] == null){
+                newArr[idx] = this.pArray[i];
+            }
+        }
+        for(int i = 0; i<newArr.length; i++){
+            if(newArr[i] == null){
+                newArr[i] = this.pArray[i]; // no pixel mapped here — keep the original
+            }
         }
         this.pArray = newArr;
         update();
@@ -347,7 +354,7 @@ public class processor {
     }
     public void up(int num){
         for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].py = (pArray[i].py - num) % ySize;
+            pArray[i].py = ((pArray[i].py - num)% ySize + ySize) % ySize;
         }
         updatePP();
         update();
@@ -361,9 +368,22 @@ public class processor {
     }
     public void right(int num){
         for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].px = ((pArray[i].px - num) % xSize + xSize) % xSize;
+            pArray[i].px = ((pArray[i].px + num)) % xSize;
         }
         updatePP();
         update();
+    }
+    public void circle(int r, int[] c){
+        for(int i = 0; i<xSize*ySize; i++){
+            double theta = Math.atan2(this.pArray[i].py - c[1], this.pArray[i].px - c[0]);
+            int newPx = (int) Math.round(c[0] + r * Math.cos(theta));
+            int newPy = (int) Math.round(c[1] + r * Math.sin(theta));
+            if(newPx >= 0 && newPx < xSize && newPy >= 0 && newPy < ySize){
+                this.pArray[i].px = newPx;
+                this.pArray[i].py = newPy;
+            }
+        }
+        updatePP();
+
     }
 }

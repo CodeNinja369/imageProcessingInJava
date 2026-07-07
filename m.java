@@ -133,6 +133,14 @@ public class m{
                     demo.down(inum);
                     title+="D"+inum;
                 }
+                if(inp.equals("c")){
+                    int[] e = {w/2, h/2};
+                    for(int i = 1; i<100; i++){
+                        demo.circle(i, e);
+                    }
+                    
+                    title+="c";
+                }
                 demo.write();
                if(!inp.equals("e")){
                 title+=", ";
