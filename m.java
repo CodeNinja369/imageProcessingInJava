@@ -105,9 +105,33 @@ public class m{
                     demo.obamaAlg(mappa2);
                     title+="O2";
                 }
-                if(inp.equals("l")){
-                    demo.left();
-                    title+="l";
+                if(inp.equals("L")){
+                    System.out.print("input number of pixels:");
+                    int inum = scnr.nextInt();
+                    scnr.nextLine();
+                    demo.left(inum);
+                    title+="L"+inum;
+                }
+                if(inp.equals("R")){
+                    System.out.print("input number of pixels:");
+                    int inum = scnr.nextInt();
+                    scnr.nextLine();
+                    demo.right(inum);
+                    title+="R"+inum;
+                }
+                if(inp.equals("U")){
+                    System.out.print("input number of pixels:");
+                    int inum = scnr.nextInt();
+                    scnr.nextLine();
+                    demo.up(inum);
+                    title+="U"+inum;
+                }
+                if(inp.equals("D")){
+                    System.out.print("input number of pixels:");
+                    int inum = scnr.nextInt();
+                    scnr.nextLine();
+                    demo.down(inum);
+                    title+="D"+inum;
                 }
                 demo.write();
                if(!inp.equals("e")){
@@ -117,6 +141,9 @@ public class m{
             
         }
         demo.write();
+        if (title.endsWith(", ")) {
+            title = title.substring(0, title.length() - 2);
+        }
         new File("io.jpg").renameTo(new File(title + ".jpg"));
         
         

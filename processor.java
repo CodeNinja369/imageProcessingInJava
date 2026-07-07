@@ -20,7 +20,7 @@ public class processor {
         this.image = e;
         read();
         this.fArray = getFarray();
-        this.pArray = getPArray();
+        this.pArray = getParray();
     }
     //read and write to image files
     public void read() {
@@ -40,20 +40,24 @@ public class processor {
             System.err.println("write: " + e.getMessage());
         }
     }
-    //create array of pixel objects in an image
-    private pixel[] getPArray(){
-        int d = 0;
+   private pixel[] getParray(){
         pixel[] out = new pixel[this.xSize*this.ySize];
         for(int i = 0; i<this.fArray.length; i++){
-            out[i] = new pixel(this.fArray[i], i%this.xSize, i/this.xSize);
+            // fArray index i == x*ySize + y, so:
+            int px = i / this.ySize;
+            int py = i % this.ySize;
+            out[i] = new pixel(this.fArray[i], px, py);
         }
-        
         return out;
     }
+
     public void updatePP(){
+        pixel[] newArr = new pixel[xSize*ySize];
         for(int i = 0; i<xSize*ySize; i++){
-            this.pArray[this.pArray[i].py*(xSize-1)+this.pArray[i].py] = this.pArray[i];
+            int idx = this.pArray[i].px * ySize + this.pArray[i].py;
+            newArr[idx] = this.pArray[i];
         }
+        this.pArray = newArr;
         update();
     }
     //created flattened array
@@ -334,14 +338,30 @@ public class processor {
         }
         update();
     }
-    public void left(){
+    public void down(int num){
         for(int i = 0; i<xSize*ySize; i++){
-            if(pArray[i].py+10<=xSize){
-                pArray[i].py+=10;
-            }
-            else{
-                pArray[i].py=pArray[i].py%xSize+10;
-            }
+            pArray[i].py = (pArray[i].py + num) % ySize;
+        }
+        updatePP();
+        update();
+    }
+    public void up(int num){
+        for(int i = 0; i<xSize*ySize; i++){
+            pArray[i].py = (pArray[i].py - num) % ySize;
+        }
+        updatePP();
+        update();
+    }
+    public void left(int num){
+        for(int i = 0; i<xSize*ySize; i++){
+            pArray[i].px = ((pArray[i].px - num) % xSize + xSize) % xSize;
+        }
+        updatePP();
+        update();
+    }
+    public void right(int num){
+        for(int i = 0; i<xSize*ySize; i++){
+            pArray[i].px = ((pArray[i].px - num) % xSize + xSize) % xSize;
         }
         updatePP();
         update();
