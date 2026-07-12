@@ -2,8 +2,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
- 
- 
+
 public class processor {
     private String fileName;
     private String fileOutName;
@@ -88,10 +87,10 @@ public class processor {
             for (int j = low; j <= high - 1; j++) {
                 if (Double.parseDouble(f.get(pArray[j]).toString()) < pivot) {
                     i++;
-                    swap(i, j);
+                    swap(i, j, this.pArray);
                 }
             }
-            swap(i + 1, high);
+            swap(i + 1, high, this.pArray);
  
         } catch (IllegalAccessException e) {
             System.err.println("partition: cannot access field — " + e.getMessage());
@@ -99,12 +98,16 @@ public class processor {
         return i + 1;
     }
  
-    private void swap(int i, int j) {
-        pixel temp = this.pArray[i];
-        pArray[i] = pArray[j];
-        pArray[j] = temp;
+    private void swap(int i, int j, Object[] arr) {
+        Object temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
- 
+    private void swapint(int i, int j, int[] arr) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
     public void quickSort(String att, int low, int high) {
         try {
             Field field = pixel.class.getField(att);
@@ -315,7 +318,64 @@ public class processor {
         }
         update();
     }
- 
+    public void maximum(){
+        for(int i = 0; i < pArray.length; i++){
+            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
+            if(pArray[i].red==max)
+                pArray[i].red   = 255;
+            if(pArray[i].green==max)
+                pArray[i].green = 255;
+
+            if(pArray[i].blue  ==max)
+                pArray[i].blue = 255;
+            pArray[i].updateC();
+            
+        }
+        update();
+    }
+    public void maxornull(){
+        for(int i = 0; i < pArray.length; i++){
+            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
+            if(pArray[i].red==max)
+                pArray[i].red   = 255;
+            else pArray[i].red   = 0;
+            if(pArray[i].green==max)
+                pArray[i].green = 255;
+            else pArray[i].green = 0;
+            if(pArray[i].blue  ==max)
+                pArray[i].blue = 255;
+            else pArray[i].blue = 0;
+            pArray[i].updateC();
+            
+        }
+        update();
+    }
+
+    //changes the values for rgb to be in ascending order
+    public void invert(){
+        for(pixel p: this.pArray){
+            if(p.pixelA[0]>p.pixelA[1]){
+                swapint(0, 1, p.pixelA);
+            }
+            if(p.pixelA[1]>p.pixelA[2]){
+                swapint(1, 2, p.pixelA);
+            }
+            if(p.pixelA[0]>p.pixelA[2]){
+                swapint(0, 2, p.pixelA);
+            }
+            p.updateCA();
+        }
+        update();
+    }
+    public void invert2(){
+        for(pixel p: this.pArray){
+            p.red = 255-p.red;
+            p.green = 255-p.green;
+            p.blue=255-p.blue;
+            p.updateC();
+        }
+        update();
+    }
     //changes a pixel's colour value to an average value based on position
     public void average1(){
         int[] rowAv = new int[3];
@@ -345,6 +405,7 @@ public class processor {
         }
         update();
     }
+    //moves images in a direction a number of pixels (with wraparound)
     public void down(int num){
         for(int i = 0; i<xSize*ySize; i++){
             pArray[i].py = (pArray[i].py + num) % ySize;
@@ -366,6 +427,7 @@ public class processor {
         updatePP();
         update();
     }
+    
     public void right(int num){
         for(int i = 0; i<xSize*ySize; i++){
             pArray[i].px = ((pArray[i].px + num)) % xSize;
@@ -373,6 +435,8 @@ public class processor {
         updatePP();
         update();
     }
+
+    //supposed to move pixels in a circle: broken
     public void circle(int r, int[] c){
         for(int i = 0; i<xSize*ySize; i++){
             double theta = Math.atan2(this.pArray[i].py - c[1], this.pArray[i].px - c[0]);
@@ -385,5 +449,40 @@ public class processor {
         }
         updatePP();
 
+    }
+
+    public void flipx(){
+        for(int i = 0; i<xSize*ySize; i++){
+            this.pArray[i].px = (xSize - this.pArray[i].px)%xSize;
+        }
+        updatePP();
+    }
+    public void flipx2(){
+        for(int i = 0; i<xSize*ySize; i++){
+            if(xSize/2 - this.pArray[i].px>=0){
+                this.pArray[i].px = (xSize/2 - this.pArray[i].px)%xSize;
+            }
+            else{
+                this.pArray[i].px = (xSize/2 + (xSize-(this.pArray[i].px%xSize)));
+            }
+        }
+        updatePP();
+    }
+    public void flipy(){
+        for(int i = 0; i<xSize*ySize; i++){
+            this.pArray[i].py = ((ySize - this.pArray[i].py)%ySize);
+        }
+        updatePP();
+    }
+    public void flipy2(){
+        for(int i = 0; i<xSize*ySize; i++){
+            if(ySize/2 - this.pArray[i].py>=0){
+                this.pArray[i].py = (ySize/2 - this.pArray[i].py)%ySize;
+            }
+            else{
+                this.pArray[i].py = (ySize/2 + (ySize-(this.pArray[i].py%ySize)));
+            }
+        }
+        updatePP();
     }
 }

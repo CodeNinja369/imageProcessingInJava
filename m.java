@@ -87,6 +87,22 @@ public class m{
                     demo.black();
                     title+="b";
                 }
+                if(inp.equals("m")){
+                    demo.maximum();
+                    title+="m";
+                }
+                if(inp.equals("m2")){
+                    demo.maxornull();
+                    title+="m2";
+                }
+                if(inp.equals("i")){
+                    demo.invert();
+                    title+="i";
+                }
+                if(inp.equals("i2")){
+                    demo.invert2();
+                    title+="i2";
+                }
                 if(inp.equals("a1")){
                     demo.average1();
                     title+="a1";
@@ -141,6 +157,23 @@ public class m{
                     
                     title+="c";
                 }
+                if(inp.equals("fx")){
+                    demo.flipx();
+                    title+="fx";
+                }
+                if(inp.equals("fx2")){
+                    demo.flipx2();
+                    title+="fx2";
+                }
+                if(inp.equals("fy")){
+                    demo.flipy();
+                    title+="fy";
+                }
+                if(inp.equals("fy2")){
+                    demo.flipy2();
+                    title+="fy2";
+                }
+
                 demo.write();
                if(!inp.equals("e")){
                 title+=", ";
