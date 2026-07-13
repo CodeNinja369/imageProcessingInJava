@@ -103,6 +103,10 @@ public class m{
                     demo.invert2();
                     title+="i2";
                 }
+                if(inp.equals("p")){
+                    demo.pastelise();
+                    title+="p";
+                }
                 if(inp.equals("a1")){
                     demo.average1();
                     title+="a1";

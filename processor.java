@@ -367,6 +367,17 @@ public class processor {
         }
         update();
     }
+    public void pastelise(){
+        for(pixel p: this.pArray){
+            int max = Math.max(p.red, Math.max(p.green, p.blue));
+            int diff =255-max;
+            p.red+=diff;
+            p.green+=diff;
+            p.blue+=diff;
+            p.updateC();
+        }
+        update();
+    }
     //changes a pixel's colour value to an average value based on position
     public void average1(){
         int[] rowAv = new int[3];
