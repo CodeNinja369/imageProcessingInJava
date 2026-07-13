@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 import javax.imageio.ImageIO;
 
 public class processor {
-    private String fileName;
-    private String fileOutName;
-    private int xSize;
-    private int ySize;
+    private final String fileName;
+    private final String fileOutName;
+    private final int xSize;
+    private final int ySize;
     private BufferedImage image;
     private pixel[] pArray;
-    private int[] fArray;
+    private final int[] fArray;
     public processor(String fname, String fOut, int x,int y, BufferedImage e){
         this.fileName = fname;
         this.fileOutName = fOut;
