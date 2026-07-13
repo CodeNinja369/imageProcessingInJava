@@ -29,8 +29,7 @@ public class processor {
             System.err.println("read: " + e.getMessage());
         }
     }
- 
-    
+
     public void write() {
         try {
             File output = new File(this.fileOutName);
@@ -191,34 +190,26 @@ public class processor {
         update();
     }
     //creates brightness map of image
-    public int[][] createMap() {
-        
-        int[][] map = new int[this.xSize][this.ySize];
- 
-        for (int i = 0; i < xSize; i++) {
+    public int[] createMap() {
+        int[] map = new int[pArray.length];
+    
+        for (int i = 0; i < pArray.length; i++) {
             int rank = 0;
-            for (int j = 0; j < ySize - 1; j++) {
-                int idx = i * ySize + j;
-                if (pArray[idx].pixelB <= pArray[idx + 1].pixelB) {
+            for (int j = 0; j < pArray.length-1; j++) {
+                if (pArray[j].pixelB <= pArray[i].pixelB) {
                     rank++;
-                    map[i][j] = rank;
                 }
             }
-            
+            map[i] = rank;
         }
     
         return map;
     }
     //recolours image using brightness map, and image of equal size sorted by brightness
-    public void obamaAlg(processor pp) {
-        int[][] m = createMap();
-        
- 
-        for (int i = 0; i < xSize-1 ; i++) {
-            for(int j = 0; j<ySize-1; j++){
-                int idx = i * ySize + j;
-                this.pArray[idx] = pp.pArray[idx];
-            }
+    public void obamaAlg(processor pp){
+        int[] m = createMap();
+        for(int i =0; i<pArray.length-1; i++){
+            this.pArray[i] = pp.pArray[m[i]];
         }
         update();
     }
