@@ -215,129 +215,126 @@ public class processor {
     }
     //remove Red, Green or Blue, or any combination of two
     public void onlyRed(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].green=0;
-            pArray[i].blue=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.green=0;
+            p.blue=0;
+            p.updateC();
         }
         update();
     }
     public void onlyBlue(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].red=0;
-            pArray[i].green=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.red=0;
+            p.green=0;
+            p.updateC();
         }
         update();
     }
     public void onlyGreen(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].red=0;
-            pArray[i].blue=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.red=0;
+            p.blue=0;
+            p.updateC();
         }
         update();
     }
     public void noRed(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].red=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.red=0;
+            p.updateC();
         }
         update();
     }
     public void noGreen(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].green=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.green=0;
+            p.updateC();
         }
         update();
     }
     public void noBlue(){
-        for(int i =0; i<pArray.length; i++){
-            pArray[i].blue=0;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            p.blue=0;
+            p.updateC();
         }
         update();
     }
     public void noWhite1(){
-        for(int i = 0; i < pArray.length; i++){
-            int min = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
+        for(pixel p: this.pArray){
+            int min = Math.min(p.red, Math.min(p.green, p.blue));
             if(min>0){
-                pArray[i].red   = pArray[i].red%min;
-                pArray[i].green = pArray[i].green%min;
-                pArray[i].blue  = pArray[i].blue%min;
+                p.red   = p.red%min;
+                p.green = p.green%min;
+                p.blue  = p.blue%min;
                 
             }
-            pArray[i].updateC();
+            p.updateC();
             
         }
         update();
     }
     public void noWhite2(){
-        for(int i = 0; i < pArray.length; i++){
-            int min = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
+        for(pixel p: this.pArray){
+            int min = Math.min(p.red, Math.min(p.green, p.blue));
             if(min>0){
-                pArray[i].red   = pArray[i].red-min;
-                pArray[i].green = pArray[i].green-min;
-                pArray[i].blue  = pArray[i].blue-min;
+                p.red   = p.red-min;
+                p.green = p.green-min;
+                p.blue  = p.blue-min;
                 
             }
-            pArray[i].updateC();
+            p.updateC();
             
         }
         update();
     }
     public void white(){
-        for(int i = 0; i < pArray.length; i++){
-            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
-            pArray[i].red   = max;
-            pArray[i].green = max;
-            pArray[i].blue  = max;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            int max = Math.max(p.red, Math.max(p.green, p.blue));
+            p.red   = max;
+            p.green = max;
+            p.blue  = max;
+            p.updateC();
             
         }
         update();
     }
     public void black(){
-        for(int i = 0; i < pArray.length; i++){
-            int max = Math.min(pArray[i].red, Math.min(pArray[i].green, pArray[i].blue));
-            pArray[i].red   = max;
-            pArray[i].green = max;
-            pArray[i].blue  = max;
-            pArray[i].updateC();
+        for(pixel p: this.pArray){
+            int max = Math.min(p.red, Math.min(p.green, p.blue));
+            p.red   = max;
+            p.green = max;
+            p.blue  = max;
+            p.updateC();
             
         }
         update();
     }
     public void maximum(){
-        for(int i = 0; i < pArray.length; i++){
-            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
-            if(pArray[i].red==max)
-                pArray[i].red   = 255;
-            if(pArray[i].green==max)
-                pArray[i].green = 255;
-
-            if(pArray[i].blue  ==max)
-                pArray[i].blue = 255;
-            pArray[i].updateC();
-            
+        for(pixel p: this.pArray){
+            int max = Math.max(p.red, Math.max(p.green, p.blue));
+            if(p.red==max)
+                p.red   = 255;
+            if(p.green==max)
+                p.green = 255;
+            if(p.blue  ==max)
+                p.blue = 255;
+            p.updateC();
         }
         update();
     }
     public void maxornull(){
-        for(int i = 0; i < pArray.length; i++){
-            int max = Math.max(pArray[i].red, Math.max(pArray[i].green, pArray[i].blue));
-            if(pArray[i].red==max)
-                pArray[i].red   = 255;
-            else pArray[i].red   = 0;
-            if(pArray[i].green==max)
-                pArray[i].green = 255;
-            else pArray[i].green = 0;
-            if(pArray[i].blue  ==max)
-                pArray[i].blue = 255;
-            else pArray[i].blue = 0;
-            pArray[i].updateC();
-            
+        for(pixel p: this.pArray){
+            int max = Math.max(p.red, Math.max(p.green, p.blue));
+            if(p.red==max)
+                p.red   = 255;
+            else p.red   = 0;
+            if(p.green==max)
+                p.green = 255;
+            else p.green = 0;
+            if(p.blue  ==max)
+                p.blue = 255;
+            else p.blue = 0;
+            p.updateC();
         }
         update();
     }
