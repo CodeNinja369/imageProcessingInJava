@@ -27,7 +27,7 @@ public class m{
         processor demo = new processor("io.jpg", "io.jpg", w, h, demoIm);
         processor mappa1 = new processor("demo3.jpg", "io.jpg", w, h, mapIm);
         processor mappa2 = new processor("demo4.jpg", "io.jpg", w, h, mapIm);
-        int count = 0;
+
         while(!inp.equals("e")){
             
             System.out.print("input number:");
@@ -190,9 +190,6 @@ public class m{
             title = title.substring(0, title.length() - 2);
         }
         new File("io.jpg").renameTo(new File(title + ".jpg"));
-        
-        
+        scnr.close();
     }
-    
-
 }
