@@ -406,30 +406,30 @@ public class processor {
     }
     //moves images in a direction a number of pixels (with wraparound)
     public void down(int num){
-        for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].py = (pArray[i].py + num) % ySize;
+        for(pixel p: this.pArray){
+            p.py = (p.py + num) % ySize;
         }
         updatePP();
         update();
     }
     public void up(int num){
-        for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].py = ((pArray[i].py - num)% ySize + ySize) % ySize;
+        for(pixel p: this.pArray){
+            p.py = ((p.py - num)% ySize + ySize) % ySize;
         }
         updatePP();
         update();
     }
     public void left(int num){
-        for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].px = ((pArray[i].px - num) % xSize + xSize) % xSize;
+        for(pixel p: this.pArray){
+            p.px = ((p.px - num) % xSize + xSize) % xSize;
         }
         updatePP();
         update();
     }
     
     public void right(int num){
-        for(int i = 0; i<xSize*ySize; i++){
-            pArray[i].px = ((pArray[i].px + num)) % xSize;
+        for(pixel p: this.pArray){
+            p.px = ((p.px + num)) % xSize;
         }
         updatePP();
         update();
@@ -451,35 +451,35 @@ public class processor {
     }
 
     public void flipx(){
-        for(int i = 0; i<xSize*ySize; i++){
-            this.pArray[i].px = (xSize - this.pArray[i].px)%xSize;
+        for(pixel p: this.pArray){
+            p.px = (xSize - p.px)%xSize;
         }
         updatePP();
     }
     public void flipx2(){
-        for(int i = 0; i<xSize*ySize; i++){
-            if(xSize/2 - this.pArray[i].px>=0){
-                this.pArray[i].px = (xSize/2 - this.pArray[i].px)%xSize;
+        for(pixel p: this.pArray){
+            if(xSize/2 - p.px>=0){
+                p.px = (xSize/2 - p.px)%xSize;
             }
             else{
-                this.pArray[i].px = (xSize/2 + (xSize-(this.pArray[i].px%xSize)));
+                p.px = (xSize/2 + (xSize-(p.px%xSize)));
             }
         }
         updatePP();
     }
     public void flipy(){
-        for(int i = 0; i<xSize*ySize; i++){
-            this.pArray[i].py = ((ySize - this.pArray[i].py)%ySize);
+        for(pixel p: this.pArray){
+            p.py = ((ySize - p.py)%ySize);
         }
         updatePP();
     }
     public void flipy2(){
-        for(int i = 0; i<xSize*ySize; i++){
-            if(ySize/2 - this.pArray[i].py>=0){
-                this.pArray[i].py = (ySize/2 - this.pArray[i].py)%ySize;
+        for(pixel p: this.pArray){
+            if(ySize/2 - p.py>=0){
+                p.py = (ySize/2 - p.py)%ySize;
             }
             else{
-                this.pArray[i].py = (ySize/2 + (ySize-(this.pArray[i].py%ySize)));
+                p.py = (ySize/2 + (ySize-(p.py%ySize)));
             }
         }
         updatePP();
