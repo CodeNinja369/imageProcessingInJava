@@ -17,7 +17,7 @@ public class processor {
         this.xSize = x;
         this.ySize = y;
         this.image = e;
-        read();
+        this.read();
         this.fArray = getFarray();
         this.pArray = getParray();
     }
@@ -186,7 +186,6 @@ public class processor {
             pArray[index+1] = pstore;
             pArray[ppos] = np;
         }
-        int e = 0;
         update();
     }
     //creates brightness map of image
