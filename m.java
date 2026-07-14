@@ -11,6 +11,7 @@ public class m{
         Scanner scnr = new Scanner(System.in);
         System.out.print("Please enter percentage to remove:");
         double m = scnr.nextDouble();
+        scnr.close();
         return m;
     }
     public static void main(String[]args){
