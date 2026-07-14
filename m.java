@@ -133,9 +133,10 @@ public class m{
                     title+="a1";
                 }
 
-                /*if(inp.equals("a2")){
+                if(inp.equals("a2")){
                     demo.average2();
-                }*/
+                    title+="a2";
+                }
                 if(inp.equals("O1")){
                     mappa1.sort2();
                     demo.obamaAlg(mappa1);

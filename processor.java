@@ -434,6 +434,27 @@ public class processor {
         }
         update();
     }
+    public void average2(){
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        for(pixel p: pArray){
+            r+=p.red;
+            g+=p.green;
+            b+=p.blue;
+        }
+        r/=pArray.length;
+        g/=pArray.length;
+        b/=pArray.length;
+        for(pixel o: pArray){
+            o.red = r;
+            o.green = g;
+            o.blue = b;
+            o.updateC();
+        }
+        update();
+
+    }
     //moves images in a direction a number of pixels (with wraparound)
     public void down(int num){
         for(pixel p: this.pArray){
