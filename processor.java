@@ -360,6 +360,7 @@ public class processor {
         }
         update();
     }
+    //minuses the the rgb from 255
     public void invert2(){
         for(pixel p: this.pArray){
             p.red = 255-p.red;
@@ -369,6 +370,7 @@ public class processor {
         }
         update();
     }
+    //turns all colours into pastel colours
     public void pastelise(){
         for(pixel p: this.pArray){
             int max = Math.max(p.red, Math.max(p.green, p.blue));
@@ -380,6 +382,7 @@ public class processor {
         }
         update();
     }
+    //splits the average rgb over three pixels
     public void tear(){
         for (int i = 0; i < xSize*ySize; i+=3) {
             if(i+3>xSize*ySize-1||i+2>xSize*ySize-1||i+1>xSize*ySize-1){
@@ -434,6 +437,7 @@ public class processor {
         }
         update();
     }
+    //turns all pixels in image to average colour of image
     public void average2(){
         int r = 0;
         int g = 0;
@@ -500,7 +504,7 @@ public class processor {
         updatePP();
 
     }
-
+    //1 flips image along axis, 2 flips image along axis in opposite directions for each half
     public void flipx(){
         for(pixel p: this.pArray){
             p.px = (xSize - p.px)%xSize;
