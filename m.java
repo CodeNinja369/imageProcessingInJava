@@ -7,6 +7,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 public class m{
+    public static double removalInput(){
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("Please enter percentage to remove:");
+        double m = scnr.nextDouble();
+        return m;
+    }
     public static void main(String[]args){
         int w = 205;
         int h = 246;
@@ -48,28 +54,39 @@ public class m{
                     title+="s3";
                 }
                 if(inp.equals("-r")){
-                    demo.noRed();
-                    title+="-r";
+                    double m = removalInput();
+                    demo.minusRed(m);
+                    scnr.nextLine();
+                    title+="-r" + m;
                 }
                 if(inp.equals("-g")){
-                    demo.noGreen();
-                    title+="-g";
+                    double m = removalInput();
+                    demo.minusGreen(m);
+                    scnr.nextLine();
+                    title+="-g" + m;
                 }
                 if(inp.equals("-b")){
-                    demo.noBlue();
-                    title+="-b";
+                    double m = removalInput();
+                    demo.minusBlue(m);
+                    scnr.nextLine();
+                    title+="-b" + m;
                 }
                 if(inp.equals("-gb")){
-                    demo.onlyRed();
-                    title+="-gb";
+                    double m = removalInput();
+                    demo.minusGreenBlue(m);
+                    scnr.nextLine();
+                    title+="-gb" + m;
                 }
                 if(inp.equals("-rb")){
-                    demo.onlyGreen();
-                    title+="-rb";
+                    double m = removalInput();
+                    demo.minusRedBlue(m);
+                    scnr.nextLine();
+                    title+="-rb" + m;
                 }
                 if(inp.equals("-rg")){
-                    demo.onlyBlue();
-                    title+="-rg";
+                    double m = removalInput();
+                    scnr.nextLine();
+                    title+="-rg" + m;
                 }
                 if(inp.equals("w")){
                     demo.white();
@@ -106,6 +123,10 @@ public class m{
                 if(inp.equals("p")){
                     demo.pastelise();
                     title+="p";
+                }
+                if(inp.equals("t")){
+                    demo.tear();
+                    title+="t";
                 }
                 if(inp.equals("a1")){
                     demo.average1();

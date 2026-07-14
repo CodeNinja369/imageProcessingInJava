@@ -213,47 +213,53 @@ public class processor {
         update();
     }
     //remove Red, Green or Blue, or any combination of two
-    public void onlyRed(){
+    public void minusGreenBlue(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.green=0;
-            p.blue=0;
+            p.green*=x;
+            p.blue*=x;
             p.updateC();
         }
         update();
     }
-    public void onlyBlue(){
+    public void minusRedGreen(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.red=0;
-            p.green=0;
+            p.red*=x;
+            p.green*=x;
             p.updateC();
         }
         update();
     }
-    public void onlyGreen(){
+    public void minusRedBlue(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.red=0;
-            p.blue=0;
+            p.red*=x;
+            p.blue*=x;
             p.updateC();
         }
         update();
     }
-    public void noRed(){
+    public void minusRed(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.red=0;
+            p.red*=x;
             p.updateC();
         }
         update();
     }
-    public void noGreen(){
+    public void minusGreen(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.green=0;
+            p.green*=x;
             p.updateC();
         }
         update();
     }
-    public void noBlue(){
+    public void minusBlue(double percentRemoved){
+        double x = 1-percentRemoved/100f;
         for(pixel p: this.pArray){
-            p.blue=0;
+            p.blue*=x;
             p.updateC();
         }
         update();
@@ -371,6 +377,31 @@ public class processor {
             p.green+=diff;
             p.blue+=diff;
             p.updateC();
+        }
+        update();
+    }
+    public void tear(){
+        for (int i = 0; i < xSize*ySize; i+=3) {
+            if(i+3>xSize*ySize-1||i+2>xSize*ySize-1||i+1>xSize*ySize-1){
+                for(int j = 0; j<((xSize*ySize)%3); j++){
+                    pArray[(xSize*ySize) + j].red =0;
+                    pArray[(xSize*ySize) +j].green=0;
+                    pArray[(xSize*ySize) +j].blue=0;
+                    pArray[(xSize*ySize) +j].updateC();
+                }
+            }
+            else{
+                int r = (pArray[i].red+pArray[i+1].red+pArray[i+2].red)/3;
+                int g = (pArray[i].green+pArray[i+1].green+pArray[i+2].green)/3;
+                int b = (pArray[i].blue+pArray[i+1].blue+pArray[i+2].blue)/3;
+                pArray[i].red = r; pArray[i].green=0;pArray[i].blue=0;
+                pArray[i+1].red=0;pArray[i+1].green=g;pArray[i+1].blue=0;
+                pArray[i+2].red=0;pArray[i+2].green=0;pArray[i+2].blue=b;
+                pArray[i].updateC();
+                pArray[i+1].updateC();
+                pArray[i+2].updateC();
+            }
+            
         }
         update();
     }
