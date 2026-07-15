@@ -50,7 +50,7 @@ public class m{
         commands.put("s1",()->demo.sort1()); //sorts by base 255 single digit colour values
         commands.put("s2", ()->demo.sort2());//sorts on brightness value
         commands.put("s3", ()->demo.sort3());//sorts in checkerboard pattern using relative contrast
-        //colourbased methods
+        //colour based methods
         commands.put("-r", ()->demo.minusRed(removalInput()));       //removes all red
         commands.put("-g", ()->demo.minusGreen(removalInput()));     //removes all green
         commands.put("-b", ()->demo.minusBlue(removalInput()));      //removes all blue
@@ -85,9 +85,7 @@ public class m{
         commands.put("fx2",()->demo.flipx2());//flips the two halves of the image in the x axis in opposite directions
         commands.put("fy",()->demo.flipy());  //flips the image in the y axis
         commands.put("fy2",()->demo.flipy2());//flips the two halves of the image in the y axis in opposite directions
-
         
-
         while(!inp.equals("e")){
             demo.read();
             System.out.print("input number:");
