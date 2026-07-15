@@ -68,7 +68,7 @@ public class m{
         commands.put("p",()->demo.pastelise());                      //finds difference between max rgb and 255. adds difference to all rgb values
         commands.put("t",()->demo.tear());                           //finds average rgb of every 3 pixels. sets each pixel to average r,g, or b, all others set to 0
         commands.put("a",()->demo.average1());                       //sets the colour of each column to the average colour of that column
-        commands.put("a2",()->demo.average2());                      //sets every pxel to the average colour of the image
+        commands.put("a2",()->demo.average2());                      //sets every pixel to the average colour of the image
 
         //Obama: sets colour of image to colour pallete of another of equal size
         commands.put("O1",()->demo.obamaAlg(mappa1));              
