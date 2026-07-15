@@ -207,6 +207,7 @@ public class processor {
     //recolours image using brightness map, and image of equal size sorted by brightness
     public void obamaAlg(processor pp){
         int[] m = createMap();
+        pp.sort2();
         for(int i =0; i<pArray.length-1; i++){
             this.pArray[i] = pp.pArray[m[i]];
         }
@@ -345,7 +346,7 @@ public class processor {
     }
 
     //changes the values for rgb to be in ascending order
-    public void invert(){
+    public void invert2(){
         for(pixel p: this.pArray){
             if(p.pixelA[0]>p.pixelA[1]){
                 swapint(0, 1, p.pixelA);
@@ -361,7 +362,7 @@ public class processor {
         update();
     }
     //minuses the the rgb from 255
-    public void invert2(){
+    public void invert(){
         for(pixel p: this.pArray){
             p.red = 255-p.red;
             p.green = 255-p.green;

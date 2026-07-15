@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 public class m{
     public static double removalInput(){
@@ -13,6 +15,14 @@ public class m{
         double m = scnr.nextDouble();
         scnr.close();
         return m;
+    }
+    public static int movementInput(){
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("input number of pixels:");
+        int inum = scnr.nextInt();
+        scnr.nextLine();
+        scnr.close();
+        return inum;
     }
     public static void main(String[]args){
         int w = 205;
@@ -35,178 +45,55 @@ public class m{
         processor mappa1 = new processor("demo3.jpg", "io.jpg", w, h, mapIm);
         processor mappa2 = new processor("demo4.jpg", "io.jpg", w, h, mapIm);
 
+        Map<String, Runnable> commands = new HashMap<>();
+        //sorting methods
+        commands.put("s1",()->demo.sort1()); //sorts by base 255 single digit colour values
+        commands.put("s2", ()->demo.sort2());//sorts on brightness value
+        commands.put("s3", ()->demo.sort3());//sorts in checkerboard pattern using relative contrast
+        //colourbased methods
+        commands.put("-r", ()->demo.minusRed(removalInput()));       //removes all red
+        commands.put("-g", ()->demo.minusGreen(removalInput()));     //removes all green
+        commands.put("-b", ()->demo.minusBlue(removalInput()));      //removes all blue
+        commands.put("-gb", ()->demo.minusGreenBlue(removalInput()));//removes all green and blue
+        commands.put("-rg", ()->demo.minusRedGreen(removalInput())); //removes all red and green
+        commands.put("-rb", ()->demo.minusRedBlue(removalInput()));  //removes all red and blue
+        commands.put("-w",()->demo.noWhite1());                      //changes rgb for each pixel to (rgb % minimum rgb value)
+        commands.put("-w2",()->demo.noWhite2());                     //minuses minimum rgb value from each rgb value
+        commands.put("w",()->demo.white());                          //rgb all set to maximum rgb value
+        commands.put("b",()->demo.black());                          //rgb all set to minimum rgb value
+        commands.put("m",()->demo.maximum());                        //changes highest rgb values to 255
+        commands.put("m2",()->demo.maxornull());                     //changes highest rgb values to 255 and all others to 0
+        commands.put("i",()->demo.invert());                         //minuses all rgb values from 255
+        commands.put("i2",()->demo.invert2());                       //swaps highest rgb value with lowest rgb value
+        commands.put("p",()->demo.pastelise());                      //finds difference between max rgb and 255. adds difference to all rgb values
+        commands.put("t",()->demo.tear());                           //finds average rgb of every 3 pixels. sets each pixel to average r,g, or b, all others set to 0
+        commands.put("a",()->demo.average1());                       //sets the colour of each column to the average colour of that column
+        commands.put("a2",()->demo.average2());                      //sets every pxel to the average colour of the image
+
+        //Obama: sets colour of image to colour pallete of another of equal size
+        commands.put("O1",()->demo.obamaAlg(mappa1));              
+        commands.put("O2",()->demo.obamaAlg(mappa2));
+
+        //wraparound movement positional
+        commands.put("L",()->demo.left(movementInput()));
+        commands.put("R",()->demo.right(movementInput()));
+        commands.put("U",()->demo.up(movementInput()));
+        commands.put("D",()->demo.down(movementInput()));
+
+        //mirror image positional
+        commands.put("fx",()->demo.flipx()); 
+        commands.put("fx2",()->demo.flipx2());
+        commands.put("fy",()->demo.flipy()); 
+        commands.put("fy2",()->demo.flipy2());
+
+        
+
         while(!inp.equals("e")){
-            
+            demo.read();
             System.out.print("input number:");
             inp = scnr.nextLine();
-            
-            if(!(inp.equals(""))){
-                demo.read();
-                if(inp.equals("s1")){
-                    demo.sort1();
-                    title+="s1";
-                }
-                if(inp.equals("s2")){
-                    demo.sort2();
-                    title+="s2";
-                }
-                if(inp.equals("s3")){
-                    demo.sort3();
-                    title+="s3";
-                }
-                if(inp.equals("-r")){
-                    double m = removalInput();
-                    demo.minusRed(m);
-                    scnr.nextLine();
-                    title+="-r" + m;
-                }
-                if(inp.equals("-g")){
-                    double m = removalInput();
-                    demo.minusGreen(m);
-                    scnr.nextLine();
-                    title+="-g" + m;
-                }
-                if(inp.equals("-b")){
-                    double m = removalInput();
-                    demo.minusBlue(m);
-                    scnr.nextLine();
-                    title+="-b" + m;
-                }
-                if(inp.equals("-gb")){
-                    double m = removalInput();
-                    demo.minusGreenBlue(m);
-                    scnr.nextLine();
-                    title+="-gb" + m;
-                }
-                if(inp.equals("-rb")){
-                    double m = removalInput();
-                    demo.minusRedBlue(m);
-                    scnr.nextLine();
-                    title+="-rb" + m;
-                }
-                if(inp.equals("-rg")){
-                    double m = removalInput();
-                    scnr.nextLine();
-                    title+="-rg" + m;
-                }
-                if(inp.equals("w")){
-                    demo.white();
-                    title+="w";
-                }
-                if(inp.equals("-w1")){
-                    demo.noWhite1();
-                    title+="-w1";
-                }
-                if(inp.equals("-w2")){
-                    demo.noWhite2();
-                    title+="-w2";
-                }
-                if(inp.equals("b")){
-                    demo.black();
-                    title+="b";
-                }
-                if(inp.equals("m")){
-                    demo.maximum();
-                    title+="m";
-                }
-                if(inp.equals("m2")){
-                    demo.maxornull();
-                    title+="m2";
-                }
-                if(inp.equals("i")){
-                    demo.invert();
-                    title+="i";
-                }
-                if(inp.equals("i2")){
-                    demo.invert2();
-                    title+="i2";
-                }
-                if(inp.equals("p")){
-                    demo.pastelise();
-                    title+="p";
-                }
-                if(inp.equals("t")){
-                    demo.tear();
-                    title+="t";
-                }
-                if(inp.equals("a1")){
-                    demo.average1();
-                    title+="a1";
-                }
-
-                if(inp.equals("a2")){
-                    demo.average2();
-                    title+="a2";
-                }
-                if(inp.equals("O1")){
-                    mappa1.sort2();
-                    demo.obamaAlg(mappa1);
-                    title+="O1";
-                }
-                if(inp.equals("O2")){
-                    mappa2.sort2();
-                    demo.obamaAlg(mappa2);
-                    title+="O2";
-                }
-                if(inp.equals("L")){
-                    System.out.print("input number of pixels:");
-                    int inum = scnr.nextInt();
-                    scnr.nextLine();
-                    demo.left(inum);
-                    title+="L"+inum;
-                }
-                if(inp.equals("R")){
-                    System.out.print("input number of pixels:");
-                    int inum = scnr.nextInt();
-                    scnr.nextLine();
-                    demo.right(inum);
-                    title+="R"+inum;
-                }
-                if(inp.equals("U")){
-                    System.out.print("input number of pixels:");
-                    int inum = scnr.nextInt();
-                    scnr.nextLine();
-                    demo.up(inum);
-                    title+="U"+inum;
-                }
-                if(inp.equals("D")){
-                    System.out.print("input number of pixels:");
-                    int inum = scnr.nextInt();
-                    scnr.nextLine();
-                    demo.down(inum);
-                    title+="D"+inum;
-                }
-                if(inp.equals("c")){
-                    int[] e = {w/2, h/2};
-                    for(int i = 1; i<100; i++){
-                        demo.circle(i, e);
-                    }
-                    
-                    title+="c";
-                }
-                if(inp.equals("fx")){
-                    demo.flipx();
-                    title+="fx";
-                }
-                if(inp.equals("fx2")){
-                    demo.flipx2();
-                    title+="fx2";
-                }
-                if(inp.equals("fy")){
-                    demo.flipy();
-                    title+="fy";
-                }
-                if(inp.equals("fy2")){
-                    demo.flipy2();
-                    title+="fy2";
-                }
-
-                demo.write();
-               if(!inp.equals("e")){
-                title+=", ";
-            } 
-            }
-            
+            commands.getOrDefault(inp, () -> System.out.println("Unknown")).run();
+            demo.write();
         }
         demo.write();
         if (title.endsWith(", ")) {
