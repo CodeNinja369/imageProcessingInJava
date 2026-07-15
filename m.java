@@ -74,17 +74,17 @@ public class m{
         commands.put("O1",()->demo.obamaAlg(mappa1));              
         commands.put("O2",()->demo.obamaAlg(mappa2));
 
-        //wraparound movement positional
+        //wraparound movement: left, right, up, down
         commands.put("L",()->demo.left(movementInput()));
         commands.put("R",()->demo.right(movementInput()));
         commands.put("U",()->demo.up(movementInput()));
         commands.put("D",()->demo.down(movementInput()));
 
         //mirror image positional
-        commands.put("fx",()->demo.flipx()); 
-        commands.put("fx2",()->demo.flipx2());
-        commands.put("fy",()->demo.flipy()); 
-        commands.put("fy2",()->demo.flipy2());
+        commands.put("fx",()->demo.flipx());  //flips the image in the x axis 
+        commands.put("fx2",()->demo.flipx2());//flips the two halves of the image in the x axis in opposite directions
+        commands.put("fy",()->demo.flipy());  //flips the image in the y axis
+        commands.put("fy2",()->demo.flipy2());//flips the two halves of the image in the y axis in opposite directions
 
         
 
