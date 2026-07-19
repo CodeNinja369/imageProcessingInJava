@@ -13,7 +13,6 @@ public class m{
         Scanner scnr = new Scanner(System.in);
         System.out.print("Please enter percentage to remove:");
         double m = scnr.nextDouble();
-        scnr.close();
         return m;
     }
     public static int movementInput(){
@@ -21,7 +20,6 @@ public class m{
         System.out.print("input number of pixels:");
         int inum = scnr.nextInt();
         scnr.nextLine();
-        scnr.close();
         return inum;
     }
     public static void main(String[]args){
@@ -86,13 +84,22 @@ public class m{
         commands.put("fy",()->demo.flipy());  //flips the image in the y axis
         commands.put("fy2",()->demo.flipy2());//flips the two halves of the image in the y axis in opposite directions
         
+
+        //experemental
+        commands.put("S",()->demo.square());
         while(!inp.equals("e")){
             demo.read();
             System.out.print("input number:");
             inp = scnr.nextLine();
-            commands.getOrDefault(inp, () -> System.out.println("Unknown")).run();
-            demo.write();
-        }
+            if(commands.containsKey(inp)){
+                title += inp + ", ";
+                commands.get(inp).run();
+            } 
+            else if(!inp.equals("e")){
+                System.out.println("Unknown");
+            }
+    demo.write();
+}
         demo.write();
         if (title.endsWith(", ")) {
             title = title.substring(0, title.length() - 2);

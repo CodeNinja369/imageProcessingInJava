@@ -540,4 +540,40 @@ public class processor {
         }
         updatePP();
     }
+    public void square(){
+        int layers = Math.min(xSize, ySize) / 2;
+
+        for(int layer = 0; layer < layers; layer++){
+            int left = layer;
+            int right = xSize - 1 - layer;
+            int top = layer;
+            int bottom = ySize - 1 - layer;
+
+            for(int i = top; i < bottom; i++){
+                int idx = left*ySize + i;
+                pArray[idx].py += 1;
+                pArray[idx].updateC();
+            }
+
+            for(int j = left; j < right; j++){
+                int idx = j*ySize + bottom;
+                pArray[idx].px += 1;
+                pArray[idx].updateC();
+            }
+
+            for(int i = bottom; i > top; i--){
+                int idx = right*ySize + i;
+                pArray[idx].py -= 1;
+                pArray[idx].updateC();
+            }
+
+            for(int j = right; j > left; j--){
+                int idx = j*ySize + top;
+                pArray[idx].px -= 1;
+                pArray[idx].updateC();
+            }
+        }
+
+        updatePP();
+    }
 }
