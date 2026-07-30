@@ -23,8 +23,8 @@ public class m{
         return inum;
     }
     public static void main(String[]args){
-        int w = 205;
-        int h = 246;
+        int w = 417;
+        int h = 479;
         BufferedImage demoIm = null;
         BufferedImage mapIm = null;
         String inp = "";
@@ -40,8 +40,8 @@ public class m{
         String title = "d1..";
         Scanner scnr = new Scanner(System.in);
         processor demo = new processor("io.jpg", "io.jpg", w, h, demoIm);
-        processor mappa1 = new processor("demo3.jpg", "io.jpg", w, h, mapIm);
-        processor mappa2 = new processor("demo4.jpg", "io.jpg", w, h, mapIm);
+        //processor mappa1 = new processor("demo3.jpg", "io.jpg", w, h, mapIm);
+        //processor mappa2 = new processor("demo4.jpg", "io.jpg", w, h, mapIm);
 
         Map<String, Runnable> commands = new HashMap<>();
         //sorting methods
@@ -69,8 +69,8 @@ public class m{
         commands.put("a2",()->demo.average2());                      //sets every pixel to the average colour of the image
 
         //Obama: sets colour of image to colour pallete of another of equal size
-        commands.put("O1",()->demo.obamaAlg(mappa1));              
-        commands.put("O2",()->demo.obamaAlg(mappa2));
+        //commands.put("O1",()->demo.obamaAlg(mappa1));              
+        //commands.put("O2",()->demo.obamaAlg(mappa2));
 
         //wraparound movement: left, right, up, down
         commands.put("L",()->demo.left(movementInput()));
