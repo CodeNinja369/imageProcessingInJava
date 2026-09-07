@@ -98,8 +98,8 @@ public class m{
             else if(!inp.equals("e")){
                 System.out.println("Unknown");
             }
-    demo.write();
-}
+            demo.write();
+        }
         demo.write();
         if (title.endsWith(", ")) {
             title = title.substring(0, title.length() - 2);
